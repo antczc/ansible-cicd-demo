@@ -1,0 +1,25 @@
+name: Run Ansible Playbook
+
+
+on:
+ push:
+  branches:
+   - main
+
+
+jobs:
+ ansible:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Ansible
+      run: |
+       sudo apt update
+       sudo apt install -y ansible
+
+    - name: Run Playbook
+      run: |
+       ansible-playbook -i inventory.ini playbook.yml --syntax-check
+       ansible-playbook -i inventory.ini playbook.yml
