@@ -1,25 +1,22 @@
-name: Run Ansible Playbook
-
+name: CI/CD Pipeline
 
 on:
- push:
-  branches:
-   - main
+  push:
+   branches:
+    - main
 
 
 jobs:
- ansible:
+ deploy:
    runs-on: ubuntu-latest
    steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up Ansible
+    - name: Set Up Ansible
       run: |
        sudo apt update
        sudo apt install -y ansible
 
-    - name: Run Playbook
-      run: |
-       ansible-playbook -i inventory.ini playbook.yml --syntax-check
-       ansible-playbook -i inventory.ini playbook.yml
+    - name: Deploy to Staging
+      run: ansible-playbook -i inventory.ini playbook.yml
